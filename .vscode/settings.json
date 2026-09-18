@@ -1,0 +1,37 @@
+{
+  "//": "Hide machine noise from the explorer. out/ stays visible — it is the finished website.",
+  "files.exclude": {
+    "**/.next": true,
+    "**/node_modules": true,
+    "**/next-env.d.ts": true,
+    "**/*.tsbuildinfo": true
+  },
+  "search.exclude": {
+    "**/.next": true,
+    "**/out": true,
+    "**/reference": true
+  },
+
+  "//live-preview": [
+    "Microsoft's Live Preview panel. serverRoot makes out/ the top of the website —",
+    "without it the page's links to /assets/... and /_next/... point one folder too",
+    "high and you get a blank page.",
+    "",
+    "KNOWN LIMITATION, not something these settings can fix: `npm run build` deletes",
+    "and recreates out/, so a Live Preview server that started earlier is left holding",
+    "a folder that no longer exists and answers 404 to everything — which also looks",
+    "like a blank page. After a build you must reload the VS Code window",
+    "(Cmd+Shift+P -> 'Developer: Reload Window') for it to pick the folder up again.",
+    "",
+    "To avoid that entirely, use the tasks in tasks.json instead: they serve over a URL,",
+    "which survives rebuilds."
+  ],
+  "livePreview.serverRoot": "out",
+  "livePreview.defaultPreviewPath": "/index.html",
+  "livePreview.portNumber": 5500,
+  "livePreview.openPreviewTarget": "Embedded Preview",
+
+  "//live-server": "Ritwick Dey's Live Server (the 'Go Live' button). Same root, same limitation.",
+  "liveServer.settings.root": "/out",
+  "liveServer.settings.port": 5501
+}

@@ -1,0 +1,32 @@
+# dependencies
+node_modules
+.pnp
+.pnp.*
+
+# next.js
+.next/
+out/
+next-env.d.ts
+
+# production
+build
+dist
+
+# local AI assistant tooling (includes platform-specific binaries)
+.agents/
+.claude/
+.codex/
+.impeccable/
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
+
+# env
+.env
+.env.*
+!.env.example
+
+# vercel
+.vercel

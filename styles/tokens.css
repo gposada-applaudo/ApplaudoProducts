@@ -1,0 +1,209 @@
+/* ════════════════════════════════════════════════════════════════════
+   APPLAUDO DESIGN TOKENS  ·  Tailwind v4 CSS-first theme
+   ────────────────────────────────────────────────────────────────────
+   52 color values: 10 neutrals + 6 chromatic ramps of 7 steps each.
+   Every color's main is the 400.
+   Source of truth: reference/legacy/DESIGN.md §5 (Colors)
+
+   Anything declared in @theme becomes BOTH a CSS custom property and a
+   Tailwind utility — `--color-red-400` gives you `bg-red-400`,
+   `text-red-400`, `border-red-400`, and `var(--color-red-400)`.
+   ════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Hard reset of Tailwind's stock palette ───────────────────────────
+     The Applaudo system replaces every previous color definition, so the
+     default oklch palette is cleared rather than sitting alongside it.
+     A stray `bg-slate-700` is then a build-visible mistake, not a silent
+     off-brand color. Delete this line to get Tailwind's colors back. */
+  --color-*: initial;
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+  /* Pure white is NOT one of the 52 — it exists only as the raised band
+     and card fill that gives the section rhythm its lift. */
+  --color-white: #ffffff;
+  /* Applaudo Black, not #000. Nothing in the system is pure black. */
+  --color-black: #121212;
+
+  /* ── Neutrals ─────────────────────────────────────────────────────── */
+  --color-neutral-50:  #f7f7f7;  /* Applaudo White */
+  --color-neutral-100: #dedede;
+  --color-neutral-200: #c4c4c4;
+  --color-neutral-300: #ababab;  /* secondary text on dark · 8.16 */
+  --color-neutral-400: #919191;
+  --color-neutral-500: #787878;  /* 4.12 / 4.24 — clears AA on neither ground */
+  --color-neutral-600: #5e5e5e;  /* secondary text on light · 6.05 */
+  --color-neutral-700: #454545;
+  --color-neutral-800: #2b2b2b;
+  --color-neutral-900: #121212;  /* Applaudo Black */
+
+  /* ── Red · brand primary · Digital Transformation ─────────────────── */
+  --color-red-100: #ffefef;
+  --color-red-200: #ffc8c8;
+  --color-red-300: #ff8d8d;      /* red text on dark */
+  --color-red-400: #ff4040;      /* Applaudo Red */
+  --color-red-500: #a12828;      /* red text on light · 6.88 */
+  --color-red-600: #751d1d;
+  --color-red-700: #521414;
+
+  /* ── Purple · Knewton Ecosystem ───────────────────────────────────── */
+  --color-purple-100: #f7f0fd;
+  --color-purple-200: #e4c8f9;
+  --color-purple-300: #c68ef3;
+  --color-purple-400: #a044e8;
+  --color-purple-500: #652a93;
+  --color-purple-600: #491e6a;
+  --color-purple-700: #33154b;
+
+  /* ── Orange · Partner Products ────────────────────────────────────── */
+  --color-orange-100: #fff5ee;
+  --color-orange-200: #ffddc4;
+  --color-orange-300: #ffb885;
+  --color-orange-400: #ff8833;
+  --color-orange-500: #a15520;
+  --color-orange-600: #753d17;
+  --color-orange-700: #522b10;
+
+  /* ── Yellow · Live Systems ────────────────────────────────────────── */
+  --color-yellow-100: #fff9ec;
+  --color-yellow-200: #ffebbb;
+  --color-yellow-300: #ffd771;
+  --color-yellow-400: #fcba14;   /* field color only · 1.61 on Applaudo White */
+  --color-yellow-500: #9f750d;   /* 3.90 — misses AA, use 600 for text */
+  --color-yellow-600: #74550a;   /* yellow text on light · 6.43 */
+  --color-yellow-700: #513b08;
+
+  /* ── Blue · semantic: information ─────────────────────────────────── */
+  --color-blue-100: #eff3ff;
+  --color-blue-200: #c8d5ff;
+  --color-blue-300: #8da7ff;
+  --color-blue-400: #406cff;
+  --color-blue-500: #2844a1;
+  --color-blue-600: #1d3075;
+  --color-blue-700: #142152;
+
+  /* ── Green · semantic: success ────────────────────────────────────── */
+  --color-green-100: #edfaf1;
+  --color-green-200: #bef0cf;
+  --color-green-300: #79e09b;
+  --color-green-400: #21c759;
+  --color-green-500: #157d38;
+  --color-green-600: #0f5b28;
+  --color-green-700: #0b401b;
+
+  /* ── Applaudo semantic layer ──────────────────────────────────────── */
+  /* Applaudo White is the page ground; white lifts on top of it. */
+  --color-surface:            var(--color-neutral-50);
+  --color-surface-lift:       #ffffff;
+  --color-surface-invert:     var(--color-neutral-900);
+  --color-ink:                var(--color-neutral-900);
+  --color-ink-muted:          var(--color-neutral-600);
+  --color-on-dark:            var(--color-neutral-50);
+  --color-ink-muted-on-dark:  var(--color-neutral-300);
+  --color-brand:              var(--color-red-400);
+  --color-line:               rgba(18, 18, 18, 0.08);
+
+  /* Portfolio identities */
+  --color-portfolio-transformation: var(--color-red-400);
+  --color-portfolio-knewton:        var(--color-purple-400);
+  --color-portfolio-partner:        var(--color-orange-400);
+  --color-portfolio-live:           var(--color-yellow-400);
+
+  /* ── shadcn/ui semantic layer, mapped onto Applaudo ───────────────────
+     Components pulled in with `npx shadcn@latest add …` reference these
+     names. Mapping them here means they land on-brand with no edits. */
+  --color-background:           var(--color-neutral-50);
+  --color-foreground:           var(--color-neutral-900);
+  --color-card:                 #ffffff;
+  --color-card-foreground:      var(--color-neutral-900);
+  --color-popover:              #ffffff;
+  --color-popover-foreground:   var(--color-neutral-900);
+  --color-primary:              var(--color-neutral-900);
+  --color-primary-foreground:   var(--color-neutral-50);
+  --color-secondary:            var(--color-neutral-100);
+  --color-secondary-foreground: var(--color-neutral-900);
+  --color-muted:                var(--color-neutral-100);
+  --color-muted-foreground:     var(--color-neutral-600);
+  --color-accent:               var(--color-neutral-100);
+  --color-accent-foreground:    var(--color-neutral-900);
+  --color-destructive:          var(--color-red-500);
+  --color-destructive-foreground: var(--color-neutral-50);
+  --color-border:               var(--color-neutral-100);
+  --color-input:                var(--color-neutral-100);
+  --color-ring:                 var(--color-red-400);
+
+  /* ── Type ─────────────────────────────────────────────────────────────
+     One family, two weights: 400 and 600. Tailwind's own text-sm/base/lg
+     scale is left intact alongside these named sizes. */
+  --font-sans: "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "SF Mono", "Fira Code", ui-monospace, monospace;
+
+  --text-label:         0.8125rem;                    /* eyebrows, chips, meta */
+  --text-ui:            0.875rem;                     /* nav links, buttons */
+  --text-body-sm:       1rem;                         /* compact body */
+  --text-body:          1.0625rem;                    /* all body copy */
+  --text-title-xs:      1.25rem;                      /* compact headings, stat figures */
+  --text-title-sm:      1.5rem;                       /* card headings */
+  --text-stat:          clamp(2rem, 3vw, 2.625rem);   /* count-up figures (.stats-row strong) */
+  --text-section-title: clamp(1.75rem, 2.8vw, 2.5rem);/* default h2 */
+  --text-feature:       clamp(2rem, 3.3vw, 3rem);     /* pull-quotes */
+  --text-title-md:      clamp(2.125rem, 4vw, 3.75rem);/* large section h2 */
+  --text-title-lg:      clamp(3.5rem, 6.6vw, 5.75rem);/* hero h1 only */
+
+  /* ── Geometry ─────────────────────────────────────────────────────────
+     Deliberately NOT named xs/sm/xl: those would silently redefine
+     Tailwind's rounded-xs / rounded-sm / rounded-xl.
+       rounded-tag    = legacy --radius-xs   (pills, inline labels)
+       rounded-inner  = legacy --radius-sm   (icon boxes, nav items)
+       rounded-card   = legacy --radius      (standalone cards)
+       rounded-shell  = legacy --radius-xl   (outer shells of nested cards) */
+  --radius-tag:   6px;
+  --radius-inner: 18px;
+  --radius-card:  32px;
+  --radius-shell: 32px;
+  --radius-pill:  999px;
+
+  /* ── Elevation · ambient only, never at rest on interactive elements ── */
+  --shadow-ambient: 0 28px 70px rgba(18, 18, 18, 0.08), 0 8px 24px rgba(18, 18, 18, 0.04);
+  --shadow-deep:    0 34px 90px rgba(18, 18, 18, 0.13);
+  --shadow-header:  0 18px 48px rgba(18, 18, 18, 0.08);
+  --shadow-button:  inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 14px 30px rgba(18, 18, 18, 0.18);
+
+  /* ── Motion · ease-out only, no bounce, transform + opacity only ────── */
+  --ease-exit: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── Layout ───────────────────────────────────────────────────────── */
+  --container-section: 1180px;  /* → max-w-section */
+  --container-narrow:  930px;   /* → max-w-narrow  */
+  /* The legacy design system's two real breakpoints. Custom breakpoints are
+     emitted BEFORE Tailwind's defaults regardless of value, so a default
+     variant (sm:, lg:, …) beats these in the cascade at widths where both
+     match — use only these two, never mix families on one property. */
+  --breakpoint-mobile: 640px;   /* → mobile: variant; grids collapse to 1-up below */
+  --breakpoint-tablet: 981px;   /* → tablet: variant; nav collapses below */
+}
+
+/* ── Values that are not Tailwind utilities ─────────────────────────────
+   Durations, pointer state, and the spec-verbatim --color-text* aliases
+   (so anything copied straight out of the color system spec resolves). */
+:root {
+  --duration-fast:     160ms;   /* color, border */
+  --duration-standard: 220ms;   /* card hover, menu items */
+  --duration-button:   260ms;   /* button transform + shadow */
+  --duration-reveal:   560ms;   /* scroll entrance */
+
+  --mx: 50%;
+  --my: 50%;
+  --shine-x: 50%;
+  --shine-y: 50%;
+
+  --color-text:               var(--color-neutral-900);
+  --color-text-muted:         var(--color-neutral-600);
+  --color-text-on-dark:       var(--color-neutral-50);
+  --color-text-muted-on-dark: var(--color-neutral-300);
+  --color-success:            var(--color-green-400);
+  --color-success-text:       var(--color-green-500);
+  --color-info:               var(--color-blue-400);
+  --color-info-text:          var(--color-blue-500);
+}

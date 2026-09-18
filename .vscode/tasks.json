@@ -1,0 +1,37 @@
+{
+  "//": "Cmd+Shift+P -> 'Tasks: Run Task' -> pick one. Or Cmd+Shift+B for the default.",
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Look at the site (live, updates as you type)",
+      "detail": "Starts the dev server, then opens it inside VS Code.",
+      "type": "shell",
+      "command": "npm run dev",
+      "isBackground": true,
+      "group": { "kind": "build", "isDefault": true },
+      "problemMatcher": {
+        "pattern": { "regexp": "^$", "file": 1, "location": 2, "message": 3 },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "Ready|started server|Local:"
+        }
+      },
+      "presentation": { "reveal": "silent", "panel": "dedicated" },
+      "runOptions": { "instanceLimit": 1 }
+    },
+    {
+      "label": "Look at the finished site",
+      "detail": "Builds the site, then serves out/ on port 4000.",
+      "type": "shell",
+      "command": "npm run preview",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": { "regexp": "^$", "file": 1, "location": 2, "message": 3 },
+        "background": { "activeOnStart": true, "beginsPattern": ".", "endsPattern": "Preview: http" }
+      },
+      "presentation": { "reveal": "always", "panel": "dedicated" },
+      "runOptions": { "instanceLimit": 1 }
+    }
+  ]
+}

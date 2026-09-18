@@ -1,0 +1,388 @@
+/* `source(none)` turns OFF Tailwind's automatic file scanning, and the explicit
+   @source below turns it back on for src/ only. Without this Tailwind also
+   scans HTML at the project root — including its own build output — and
+   re-emits utilities harvested from the previous build. That fed ~12 KB of
+   phantom CSS into the Vite bundle. Auto-detection normally skips gitignored
+   paths, but this project has no git repo, so nothing was skipping them. */
+@import "tailwindcss" source(none);
+@source "../";
+
+/* Safety net for the scroll-reveal animations.
+   Anything with [data-reveal] starts at opacity 0 and is faded in by JavaScript
+   when it scrolls into view. If JavaScript never runs — disabled, blocked, or a
+   failed bundle — that content would stay invisible forever and the section
+   would look empty. The rule at the end of this file covers that case. */
+@import "./tokens.css";
+
+/* ── Avenir Next ──────────────────────────────────────────────────────────
+   The brand typeface, shipped with the site. Without these, only Mac and
+   iPhone visitors saw Avenir (macOS bundles it); everyone else fell through
+   to Arial. Converted from the licensed .ttf originals to .woff2 — same
+   outlines, 83% smaller. Originals kept in reference/fonts-original/.
+
+   Only 400 and 600 are here because that is all the design uses (the Single
+   Family Rule, reference/legacy/DESIGN.md §11). `swap` shows the fallback
+   immediately and switches when the font arrives, so text is never invisible. */
+@font-face {
+  font-family: "Avenir Next";
+  src: url("/assets/fonts/AvenirNext-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Avenir Next";
+  src: url("/assets/fonts/AvenirNext-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* shadcn/ui animation variants (data-state, data-side, …) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+    font-kerning: normal;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Two weights only: 400 and 600. */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--color-red-200);
+    color: var(--color-ink);
+  }
+}
+
+/**
+ * Button glint — cursor-following highlight ported from the kitchensink's
+ * `.button::before` / `.button::after` (reference/legacy/styles.css:979-1192).
+ * Negative z-index (vs. the source's 0/1) so the layers sit between the
+ * button's own background-color and its text/icon content without requiring
+ * every caller to wrap children in a z-indexed <span> the way the static
+ * HTML reference does. `--shine-x` / `--shine-y` are set by Button's own
+ * pointer handler (src/components/ui/button.tsx), mirroring
+ * reference/legacy/script.js's `setPointerVars`.
+ */
+@layer components {
+  .btn-glint::before,
+  .btn-glint::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+    border-radius: inherit;
+    background-repeat: no-repeat;
+    background-size: 100% 100%, 100% 100%, 230% 255%;
+    transition: opacity 240ms ease, transform 540ms var(--ease-exit), background-position 700ms var(--ease-exit);
+    will-change: opacity, transform;
+  }
+
+  .btn-glint::before {
+    z-index: -2;
+    background-position: 0 0, 0 0, calc(50% + ((var(--shine-x, 50%) - 50%) * 0.22)) calc(50% + ((var(--shine-y, 50%) - 50%) * 0.045));
+    background-blend-mode: screen, screen, normal;
+    -webkit-mask-image: radial-gradient(146px 86px at var(--shine-x, 50%) var(--shine-y, 50%), #000 0, #000 30%, rgba(0, 0, 0, 0.94) 42%, transparent 66%);
+    mask-image: radial-gradient(146px 86px at var(--shine-x, 50%) var(--shine-y, 50%), #000 0, #000 30%, rgba(0, 0, 0, 0.94) 42%, transparent 66%);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  .btn-glint::after {
+    z-index: -1;
+    padding: 1.5px;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    -webkit-mask-image: radial-gradient(204px 118px at var(--shine-x, 50%) var(--shine-y, 50%), rgba(0, 0, 0, 0.96) 0, #000 28%, rgba(0, 0, 0, 0.88) 44%, transparent 74%);
+    mask-image: radial-gradient(204px 118px at var(--shine-x, 50%) var(--shine-y, 50%), rgba(0, 0, 0, 0.96) 0, #000 28%, rgba(0, 0, 0, 0.88) 44%, transparent 74%);
+  }
+
+  .btn-glint-black::before {
+    background-image:
+      radial-gradient(78px 46px at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.025) 28%, transparent 54%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(154, 154, 154, 0.04) 34%, rgba(42, 42, 42, 0.05) 72%, rgba(255, 255, 255, 0.05)),
+      url("/assets/effects/button-glass-dark.png");
+    filter: grayscale(0.08) saturate(1.02) contrast(1.08) brightness(1.01);
+  }
+
+  .btn-glint-black::after {
+    background-image:
+      radial-gradient(96px 88px at 0% 50%, rgba(255, 255, 255, 0.18), rgba(85, 214, 255, 0.28) 24%, rgba(184, 108, 255, 0.18) 48%, transparent 78%),
+      radial-gradient(96px 88px at 100% 50%, rgba(255, 255, 255, 0.16), rgba(255, 98, 194, 0.24) 26%, rgba(140, 112, 255, 0.16) 50%, transparent 78%),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(112, 222, 255, 0.08) 16%, rgba(210, 120, 255, 0.14) 50%, rgba(255, 128, 204, 0.12) 82%, rgba(255, 255, 255, 0.06)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18), transparent 18% 76%, rgba(255, 255, 255, 0.12));
+    filter: saturate(1.02) blur(1.8px);
+  }
+
+  .btn-glint-white::before {
+    background-image:
+      radial-gradient(78px 46px at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.03) 28%, transparent 54%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(214, 214, 214, 0.08) 34%, rgba(184, 184, 184, 0.06) 72%, rgba(255, 255, 255, 0.1)),
+      url("/assets/effects/button-glass-light.png");
+    filter: grayscale(0) saturate(1.04) contrast(1.04) brightness(1.03);
+  }
+
+  .btn-glint-white::after {
+    background-image:
+      radial-gradient(96px 88px at 0% 50%, rgba(255, 255, 255, 0.22), rgba(96, 220, 255, 0.12) 24%, rgba(190, 140, 255, 0.1) 48%, transparent 78%),
+      radial-gradient(96px 88px at 100% 50%, rgba(255, 255, 255, 0.2), rgba(255, 136, 208, 0.1) 26%, rgba(174, 132, 255, 0.08) 50%, transparent 78%),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(116, 224, 255, 0.05) 16%, rgba(218, 148, 255, 0.08) 50%, rgba(255, 146, 214, 0.06) 82%, rgba(255, 255, 255, 0.08)),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.24), transparent 18% 76%, rgba(255, 255, 255, 0.18));
+    filter: saturate(1.01) blur(1.7px);
+  }
+
+  .btn-glint:hover::before {
+    transform: scale(1.006);
+  }
+
+  .btn-glint-black:hover::before {
+    opacity: 0.98;
+  }
+
+  .btn-glint-black:hover::after {
+    opacity: 0.72;
+  }
+
+  .btn-glint-white:hover::before {
+    opacity: 0.96;
+  }
+
+  .btn-glint-white:hover::after {
+    opacity: 0.7;
+  }
+
+  .btn-glint:active::before {
+    opacity: 0.72;
+  }
+}
+
+/**
+ * Service pillar — ported from `.service-pillar` (reference/legacy/styles.css:2520-2600).
+ * At rest a near-transparent card; on engage the glass layer fades in with a
+ * pointer-tracked red bloom while its siblings recede. The sibling dimming is
+ * `:has()` rather than the source's JS `.has-active` class, so it covers
+ * keyboard focus with no state to keep in sync.
+ */
+@layer components {
+  .pillar-group {
+    perspective: 1200px;
+  }
+
+  .pillar {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-top: 1px solid transparent;
+    border-radius: var(--radius-shell);
+    background: transparent;
+    transition:
+      transform 360ms var(--ease-exit),
+      opacity 260ms ease,
+      border-color 260ms ease,
+      background 260ms ease,
+      box-shadow 360ms var(--ease-exit);
+  }
+
+  .pillar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.84), rgba(247, 247, 247, 0.54)),
+      radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 64, 64, 0.1), transparent 34%);
+    transition: opacity 260ms ease;
+  }
+
+  .pillar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: inherit;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 260ms ease;
+  }
+
+  .pillar:hover::before,
+  .pillar:focus-within::before,
+  .pillar.is-open::before,
+  .pillar:hover::after,
+  .pillar:focus-within::after,
+  .pillar.is-open::after {
+    opacity: 1;
+  }
+
+  .pillar:hover,
+  .pillar:focus-within,
+  .pillar.is-open {
+    border-color: rgba(18, 18, 18, 0.05);
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 34px 86px rgba(18, 18, 18, 0.12), 0 10px 28px rgba(18, 18, 18, 0.05);
+    transform: translateY(-12px) scale(1.015);
+  }
+
+  .pillar-group:has(.pillar:hover, .pillar:focus-within, .pillar.is-open) .pillar:not(:hover):not(:focus-within):not(.is-open) {
+    opacity: 0.62;
+    transform: translateY(18px) scale(0.985);
+  }
+}
+
+@layer components {
+  /* Glass card — `.glass-card` (reference/legacy/styles.css:1626 + :1067).
+     Restored: it was deleted during a cleanup for having no importer, which was
+     the wrong test — it is a documented system surface used in five places in
+     the legacy gallery. Unlike `.pillar`, the glass is present AT REST here; the
+     pillar keeps its glass on a hidden ::before and only reveals it on engage.
+     Values are the legacy ones, with the token names remapped. */
+  .glass-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-radius: var(--radius-card);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.46)),
+      radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 64, 64, 0.08), transparent 42%);
+    box-shadow: var(--shadow-ambient);
+    /* No hand-written -webkit- twin: the build prefixes from the browser
+       target, and a manual duplicate after the standard property made the
+       minifier keep only the prefixed form, which Chrome then dropped. */
+    backdrop-filter: blur(24px) saturate(1.4);
+    transition: transform 220ms ease, box-shadow 220ms ease;
+  }
+
+  .glass-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    opacity: 0;
+    background: radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 255, 255, 0.82), transparent 32%);
+    transition: opacity 180ms ease;
+  }
+
+  .glass-card-interactive:hover {
+    transform: translateY(-3px);
+  }
+
+  .glass-card-interactive:hover::before {
+    opacity: 1;
+  }
+}
+
+@layer components {
+  /* Testimonial carousel — `.testimonial-*` (reference/legacy/styles.css).
+     Five cards share one grid cell, so the stack is as tall as the tallest
+     card and nothing reflows as it rotates. Position is a data attribute
+     rather than inline style because the five states are a fixed vocabulary.
+
+     The blur goes on `.testimonial-card-inner`, never on the card itself:
+     the card already carries `backdrop-filter`, and a `filter` on the same
+     element would create a new containing block and cancel it. */
+  .testimonial-card {
+    grid-area: 1 / 1;
+    border: 1px solid rgba(255, 255, 255, 0.74);
+    border-radius: var(--radius-card);
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(22px) saturate(1.25);
+    transition:
+      transform 520ms var(--ease-exit),
+      opacity 420ms ease,
+      box-shadow 420ms ease;
+  }
+
+  .testimonial-card-inner {
+    transition: filter 420ms ease;
+  }
+
+  .testimonial-card[data-pos="0"] { transform: translateX(0) scale(1);        z-index: 5; box-shadow: var(--shadow-ambient); }
+  .testimonial-card[data-pos="1"] { transform: translateX(20%) scale(0.86);   z-index: 4; }
+  .testimonial-card[data-pos="2"] { transform: translateX(36%) scale(0.73);   z-index: 3; }
+  .testimonial-card[data-pos="3"] { transform: translateX(-36%) scale(0.73);  z-index: 2; }
+  .testimonial-card[data-pos="4"] { transform: translateX(-20%) scale(0.86);  z-index: 4; }
+  .testimonial-card[data-pos="hidden"] { opacity: 0; pointer-events: none; z-index: 0; }
+
+  .testimonial-card[data-pos="0"] .testimonial-card-inner { filter: none; }
+  .testimonial-card[data-pos="1"] .testimonial-card-inner,
+  .testimonial-card[data-pos="4"] .testimonial-card-inner { filter: blur(1px); }
+  .testimonial-card[data-pos="2"] .testimonial-card-inner,
+  .testimonial-card[data-pos="3"] .testimonial-card-inner { filter: blur(2px); }
+}
+
+/* Browser surfaces the design system should own, not the browser. */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  border: 3px solid var(--color-surface);
+  border-radius: 999px;
+  background: rgba(18, 18, 18, 0.22);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(18, 18, 18, 0.36);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Scroll-reveal safety net. [data-reveal] elements start at opacity 0 and are
+   faded in by JavaScript. With scripting off that would never happen and whole
+   sections would read as blank, so show them immediately instead. Pure CSS — no
+   inline script, nothing for React to disagree with during hydration. */
+@media (scripting: none) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
