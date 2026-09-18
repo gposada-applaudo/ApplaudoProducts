@@ -247,11 +247,9 @@
      the legacy gallery. Unlike `.pillar`, the glass is present AT REST here; the
      pillar keeps its glass on a hidden ::before and only reveals it on engage.
      Values are the legacy ones, with the token names remapped. */
+  .glass-surface,
   .glass-card {
-    position: relative;
-    overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.76);
-    border-radius: var(--radius-card);
     background:
       linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.46)),
       radial-gradient(circle at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 64, 64, 0.08), transparent 42%);
@@ -260,6 +258,12 @@
        target, and a manual duplicate after the standard property made the
        minifier keep only the prefixed form, which Chrome then dropped. */
     backdrop-filter: blur(24px) saturate(1.4);
+  }
+
+  .glass-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-card);
     transition: transform 220ms ease, box-shadow 220ms ease;
   }
 

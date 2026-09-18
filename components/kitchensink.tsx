@@ -720,7 +720,12 @@ export function Kitchensink({ tokens }: { tokens: Tokens }) {
 
         <Block id="footer" title="Site footer" source="components/ui/site-footer.tsx">
           <div className="overflow-hidden rounded-card">
-            <SiteFooter columns={FOOTER_COLUMNS} badges={FOOTER_BADGES} location="Austin, TX · San Salvador, SS" />
+            <SiteFooter
+              columns={FOOTER_COLUMNS}
+              badges={FOOTER_BADGES}
+              certifications={RECOGNITION_CERT_BADGES}
+              location="Austin, TX · San Salvador, SS"
+            />
           </div>
         </Block>
 

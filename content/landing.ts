@@ -468,9 +468,17 @@ export const RECOGNITION_CERT_BADGES = [
 ];
 
 export const FOOTER_COLUMNS = [
-  { title: "Outcomes", links: OUTCOMES.map((o) => o.name) },
-  { title: "The right products", links: PORTFOLIOS.map((p) => p.name) },
-  { title: "Company", links: ["Work", "How we work", "Contact", "Careers"] },
+  { title: "Outcomes", links: OUTCOMES.map((o) => ({ label: o.name, href: `#${o.id}` })) },
+  { title: "The right products", links: PORTFOLIOS.map((p) => ({ label: p.name, href: `#${p.id}` })) },
+  {
+    title: "Company",
+    links: [
+      { label: "Work", href: "#work" },
+      { label: "How we work", href: "#how-we-work" },
+      { label: "Contact", href: "https://applaudo.com/en/contact/", external: true },
+      { label: "Careers", href: "https://careers.smartrecruiters.com/ApplaudoStudios", external: true },
+    ],
+  },
 ];
 
 /**
@@ -479,15 +487,16 @@ export const FOOTER_COLUMNS = [
  * height would make the wide ones enormous and the square one a speck. They are
  * sized to look equal, not to measure equal.
  *
- * The Google Cloud, Microsoft, Salesforce and Archera files are footer-only
+ * The Google Cloud, Microsoft, Anthropic, Salesforce and Archera files are footer-only
  * partner lockups supplied by the client, already built for a monochrome
  * treatment. The Credentials section keeps its own separate badge artwork.
  * salesforce-partner.png is genuinely a PNG — it arrived named .svg.
  */
 export const FOOTER_BADGES: { label: string; src?: string; h?: number }[] = [
   { label: "Google Cloud Partner", src: "/assets/partners/google-cloud-partners.svg", h: 20 },
-  { label: "AWS", src: "/assets/partners/AWS.svg", h: 19 },
   { label: "Microsoft Solutions Partner", src: "/assets/partners/microsoft-solutions-partner.svg", h: 20 },
+  { label: "AWS", src: "/assets/partners/AWS.svg", h: 19 },
+  { label: "Anthropic", src: "/assets/partners/anthropic.svg", h: 12 },
   // The client's Salesforce Partner lockup. Unlike the other three it is a
   // filled plate with the logo knocked out of it rather than line art, so it
   // reads heavier than its neighbours; the row's white-out is still applied so

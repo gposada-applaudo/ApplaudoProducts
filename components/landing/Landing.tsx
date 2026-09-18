@@ -5,11 +5,9 @@ import {
   RiArrowDownSLine,
   RiArrowRightLine,
   RiArrowRightUpLine,
-  RiCloseLine,
-  RiMenuLine,
 } from "@remixicon/react";
 import { Button } from "@/components/ui/button";
-import { IconButton } from "@/components/ui/icon-button";
+import { SiteHeader } from "@/components/ui/site-header";
 import { StatsRow } from "@/components/ui/stats-row";
 import { Recognition } from "@/components/ui/recognition";
 import { LogoCloud } from "@/components/ui/logo-cloud";
@@ -44,68 +42,6 @@ import {
 } from "@/content/landing";
 
 /* ── Sections ─────────────────────────────────────────────────────────── */
-
-function Nav() {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <>
-      <header className="fixed top-[18px] left-1/2 z-50 flex w-[min(1180px,calc(100%-32px))] -translate-x-1/2 items-center justify-between gap-4 rounded-pill border border-white/74 bg-white/72 py-3 pr-3 pl-6 shadow-header backdrop-blur-[22px] backdrop-saturate-[1.25]">
-        <a href={sitePath("/")} aria-label="Applaudo home" className="shrink-0">
-          <img src={sitePath("/assets/brand/applaudo.svg")} alt="Applaudo" className="h-5 w-auto" />
-        </a>
-        <nav aria-label="Primary" className="ml-auto hidden items-center gap-1 tablet:flex">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="rounded-inner px-3 py-2 text-ui font-semibold text-ink/72 transition-colors duration-[160ms] ease-exit hover:bg-ink/[0.04] hover:text-ink"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-        <div className="flex items-center gap-2">
-          <Button asChild className="hidden tablet:inline-flex">
-            <a href="https://applaudo.com/en/contact/">
-              Talk to an AI engineer <RiArrowRightUpLine />
-            </a>
-          </Button>
-          <IconButton
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-            className="tablet:hidden"
-          >
-            {open ? <RiCloseLine /> : <RiMenuLine />}
-          </IconButton>
-        </div>
-      </header>
-
-      {open && (
-        <div className="fixed inset-x-4 top-[86px] z-40 rounded-card border border-white/74 bg-white/95 p-3 shadow-header backdrop-blur-[22px] backdrop-saturate-[1.25] tablet:hidden">
-          <nav aria-label="Primary" className="grid gap-1">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="rounded-inner px-4 py-3 text-ui font-semibold text-ink/72 transition-colors duration-[160ms] ease-exit hover:bg-ink/[0.04] hover:text-ink"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-          <Button asChild className="mt-2 w-full">
-            <a href="https://applaudo.com/en/contact/">
-              Talk to an AI engineer <RiArrowRightUpLine />
-            </a>
-          </Button>
-        </div>
-      )}
-    </>
-  );
-}
 
 function Hero() {
   return (
@@ -730,10 +666,18 @@ function Close() {
 
 /* ── Page ─────────────────────────────────────────────────────────────── */
 
-export default function Landing() {
+export default function Landing({ homeHref = "/" }: { homeHref?: string }) {
   return (
     <main>
-      <Nav />
+      <SiteHeader
+        links={NAV_LINKS}
+        action={{
+          label: "Talk to an AI engineer",
+          href: "https://applaudo.com/en/contact/",
+          external: true,
+        }}
+        homeHref={homeHref}
+      />
       <Hero />
       <Outcomes />
       <Portfolios />
@@ -745,6 +689,7 @@ export default function Landing() {
       <SiteFooter
         columns={FOOTER_COLUMNS}
         badges={FOOTER_BADGES}
+        certifications={RECOGNITION_CERT_BADGES}
         location="Austin, TX · San Salvador, SS"
       />
     </main>
