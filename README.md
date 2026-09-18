@@ -101,7 +101,7 @@ originals are kept in `reference/fonts-original/`, outside `public/`, so they
 are not uploaded with the site.
 
 To swap a weight: convert the new `.ttf` to `.woff2`, drop it in, and update the
-matching `@font-face` block at the top of `styles/globals.css`.
+matching `localFont` entry in `app/layout.tsx`.
 
 ## Publishing it
 
@@ -122,6 +122,17 @@ Upload `out/` to any web server. Nothing needs to be installed there.
 
 `out/` and `node_modules/` are generated — they rebuild every time, so they are
 not part of the project you edit. VS Code hides them (`.vscode/settings.json`).
+
+### GitHub Pages
+
+The repository includes a Pages workflow. In GitHub, choose **Settings → Pages
+→ Build and deployment → Source → GitHub Actions**. Every push to `main` then
+builds and publishes the site at:
+
+https://gposada-applaudo.github.io/ApplaudoProducts/
+
+The workflow supplies the `/ApplaudoProducts` deployment path automatically.
+Local development still runs at `http://localhost:3000/` with no path prefix.
 
 ---
 

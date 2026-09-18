@@ -5,6 +5,7 @@
  * shows only a few logos, as this one does.
  */
 import { cn } from "@/lib/utils";
+import { sitePath } from "@/lib/paths";
 
 export interface LogoCloudItem {
   name: string;
@@ -17,7 +18,7 @@ export function LogoCloud({ logos, className }: { logos: LogoCloudItem[]; classN
       {logos.map((logo) => (
         <figure key={logo.name} className="m-0 flex h-24 w-full items-center justify-center tablet:h-28">
           <img
-            src={logo.src}
+            src={sitePath(logo.src)}
             alt={logo.name}
             className="h-[68px] w-[276px] max-w-full object-contain opacity-[0.78] contrast-[1.08] grayscale transition-[filter,opacity,transform] duration-[220ms] hover:-translate-y-0.5 hover:scale-105 hover:opacity-100 hover:contrast-[1.04] hover:grayscale-0 tablet:h-20 tablet:w-[312px]"
           />

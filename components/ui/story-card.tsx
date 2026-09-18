@@ -1,4 +1,5 @@
 import { RiArrowRightLine } from "@remixicon/react";
+import { sitePath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 
 export interface Story {
@@ -19,7 +20,7 @@ export interface Story {
 export function StoryCard({ story, className }: { story: Story; className?: string }) {
   return (
     <a
-      href={story.href}
+      href={sitePath(story.href)}
       className={cn(
         "group flex w-full flex-col overflow-hidden rounded-card border border-line bg-surface-lift",
         "transition-[transform,box-shadow] duration-[220ms] ease-out hover:-translate-y-1 hover:shadow-deep",
@@ -29,7 +30,7 @@ export function StoryCard({ story, className }: { story: Story; className?: stri
       <div
         className="relative aspect-[16/7] bg-cover bg-center"
         style={{
-          backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.04), rgba(18,18,18,0.24)), url(${story.image})`,
+          backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.04), rgba(18,18,18,0.24)), url("${sitePath(story.image)}")`,
         }}
       >
         <span className="absolute top-3.5 left-3.5 rounded-pill bg-white/82 px-[13px] py-[7px] text-label font-semibold tracking-[0.02em] text-ink backdrop-blur-[14px] backdrop-saturate-[1.3]">

@@ -1,5 +1,6 @@
 import { RiInstagramLine, RiLinkedinLine, RiYoutubeLine } from "@remixicon/react";
 import { IconButton } from "@/components/ui/icon-button";
+import { sitePath } from "@/lib/paths";
 
 /**
  * `.site-footer` (reference/legacy/styles.css:3520+, markup at kitchensink.html:1353)
@@ -33,7 +34,7 @@ export function SiteFooter({
       <div className="mx-auto flex w-full max-w-section flex-col justify-between gap-12 tablet:flex-row">
         <div>
           <img
-            src="/assets/brand/applaudo.svg"
+            src={sitePath("/assets/brand/applaudo.svg")}
             alt="Applaudo"
             className="mb-6 w-[170px] brightness-0 invert"
           />
@@ -70,7 +71,7 @@ export function SiteFooter({
           <li key={badge.label} className="flex items-center">
             {badge.src ? (
               <img
-                src={badge.src}
+                src={sitePath(badge.src)}
                 alt={badge.label}
                 style={{ height: badge.h }}
                 className="w-auto opacity-60 brightness-0 invert transition-opacity duration-[220ms] ease-exit hover:opacity-100"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { type CSSProperties, useId, useState } from "react";
 import {
   RiArrowDownSLine,
   RiArrowRightLine,
@@ -22,6 +22,7 @@ import { SiteFooter } from "@/components/ui/site-footer";
 import { cn } from "@/lib/utils";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Tag } from "@/components/ui/tag";
+import { sitePath } from "@/lib/paths";
 import {
   NAV_LINKS,
   OUTCOMES,
@@ -50,8 +51,8 @@ function Nav() {
   return (
     <>
       <header className="fixed top-[18px] left-1/2 z-50 flex w-[min(1180px,calc(100%-32px))] -translate-x-1/2 items-center justify-between gap-4 rounded-pill border border-white/74 bg-white/72 py-3 pr-3 pl-6 shadow-header backdrop-blur-[22px] backdrop-saturate-[1.25]">
-        <a href="/" aria-label="Applaudo home" className="shrink-0">
-          <img src="/assets/brand/applaudo.svg" alt="Applaudo" className="h-5 w-auto" />
+        <a href={sitePath("/")} aria-label="Applaudo home" className="shrink-0">
+          <img src={sitePath("/assets/brand/applaudo.svg")} alt="Applaudo" className="h-5 w-auto" />
         </a>
         <nav aria-label="Primary" className="ml-auto hidden items-center gap-1 tablet:flex">
           {NAV_LINKS.map((link) => (
@@ -116,7 +117,7 @@ function Hero() {
         muted
         playsInline
         preload="auto"
-        src="/assets/video/ServicesBanner_1.mp4"
+        src={sitePath("/assets/video/ServicesBanner_1.mp4")}
         className="pointer-events-none absolute inset-0 z-0 size-full object-cover"
       />
       <div className="relative z-10 mx-auto w-full max-w-section px-6">
@@ -354,7 +355,7 @@ function StageMatrix({ matrix }: { matrix: PortfolioMatrix }) {
 function VendorLogo({ vendor }: { vendor: PartnerMatrix["hyperscalers"][number] }) {
   return (
     <img
-      src={vendor.src}
+      src={sitePath(vendor.src)}
       alt={vendor.alt}
       className="block h-auto max-h-7 w-auto max-w-[112px] object-contain object-left"
     />
@@ -527,7 +528,7 @@ function PortfolioRow({ portfolio, isLast }: { portfolio: Portfolio; isLast: boo
             <div className="mt-6 border-t border-line pt-6">
               {portfolio.brandLogo && (
                 <img
-                  src={portfolio.brandLogo.src}
+                  src={sitePath(portfolio.brandLogo.src)}
                   alt={portfolio.brandLogo.alt}
                   className="mb-6 h-6 w-auto"
                 />
@@ -550,7 +551,7 @@ function PortfolioRow({ portfolio, isLast }: { portfolio: Portfolio; isLast: boo
                     // the artwork so one height class sizes all three optically alike.
                     <div className="mb-7 flex flex-wrap items-center gap-x-10 gap-y-5">
                       {group.logos.map((logo) => (
-                        <img key={logo.alt} src={logo.src} alt={logo.alt} className="h-7 w-auto object-contain" />
+                        <img key={logo.alt} src={sitePath(logo.src)} alt={logo.alt} className="h-7 w-auto object-contain" />
                       ))}
                     </div>
                   )}
@@ -609,7 +610,8 @@ function Portfolios() {
   return (
     <Section
       id="products"
-      className="pb-0 before:absolute before:inset-x-0 before:top-0 before:aspect-[1440/420] before:bg-[image:url(/assets/photos/Outcomes.jpg)] before:bg-[length:100%_auto] before:bg-top before:bg-no-repeat before:[mask-image:linear-gradient(to_bottom,black_0%,transparent_88%)] before:content-['']"
+      className="pb-0 before:absolute before:inset-x-0 before:top-0 before:aspect-[1440/420] before:bg-[image:var(--products-background)] before:bg-[length:100%_auto] before:bg-top before:bg-no-repeat before:[mask-image:linear-gradient(to_bottom,black_0%,transparent_88%)] before:content-['']"
+      style={{ "--products-background": `url("${sitePath("/assets/photos/Outcomes.jpg")}")` } as CSSProperties}
     >
       <SectionHeading
         layout="stacked"
@@ -696,7 +698,7 @@ function Close() {
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0 bg-cover bg-center opacity-90"
-        style={{ backgroundImage: "url(/assets/effects/glass-1.jpeg)" }}
+        style={{ backgroundImage: `url("${sitePath("/assets/effects/glass-1.jpeg")}")` }}
       />
       <div
         aria-hidden

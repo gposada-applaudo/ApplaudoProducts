@@ -136,7 +136,7 @@
   /* ── Type ─────────────────────────────────────────────────────────────
      One family, two weights: 400 and 600. Tailwind's own text-sm/base/lg
      scale is left intact alongside these named sizes. */
-  --font-sans: "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-avenir-next), Avenir, "Helvetica Neue", Arial, sans-serif;
   --font-mono: "SF Mono", "Fira Code", ui-monospace, monospace;
 
   --text-label:         0.8125rem;                    /* eyebrows, chips, meta */

@@ -1,5 +1,6 @@
 import { RiArrowRightLine } from "@remixicon/react";
 import { Tag, TagRow } from "@/components/ui/tag";
+import { sitePath } from "@/lib/paths";
 
 /**
  * `.case-grid` (reference/legacy/styles.css:1640-1830) — one feature case beside
@@ -52,10 +53,10 @@ export function CaseGrid({ feature, aside }: { feature: CaseStudy; aside: CaseSt
         className="pointer-events-none absolute inset-y-0 left-1/2 hidden w-px -translate-x-1/2 bg-line tablet:block"
       />
 
-      <a href={feature.href} className="group flex flex-col gap-[18px]">
+      <a href={sitePath(feature.href)} className="group flex flex-col gap-[18px]">
         <div
           className="h-[clamp(190px,20vw,240px)] w-full overflow-hidden rounded-card bg-cover bg-[position:60%_center] shadow-ambient transition-[transform,box-shadow] duration-[420ms] ease-exit group-hover:-translate-y-1 group-hover:shadow-deep"
-          style={{ backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.02), rgba(18,18,18,0.16)), url(${feature.visual})` }}
+          style={{ backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.02), rgba(18,18,18,0.16)), url("${sitePath(feature.visual)}")` }}
         />
         <div>
           <p className="m-0 text-label leading-[1.35] tracking-[0.08em] text-red-400">{feature.tagline}</p>
@@ -69,14 +70,14 @@ export function CaseGrid({ feature, aside }: { feature: CaseStudy; aside: CaseSt
         {aside.map((item, index) => (
           <a
             key={item.title}
-            href={item.href}
+            href={sitePath(item.href)}
             className={`group flex flex-row items-center gap-[clamp(14px,1.8vw,20px)] py-5 tablet:py-[clamp(20px,2.5vw,32px)] ${
               index === 0 ? "tablet:pt-0" : "border-t border-line tablet:pb-0"
             }`}
           >
             <div
               className="h-[clamp(120px,13vw,150px)] w-[clamp(110px,26%,150px)] shrink-0 overflow-hidden rounded-card bg-cover bg-[position:70%_center] shadow-ambient transition-[transform,box-shadow] duration-[420ms] ease-exit group-hover:-translate-y-1 group-hover:shadow-deep"
-              style={{ backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.02), rgba(18,18,18,0.16)), url(${item.visual})` }}
+              style={{ backgroundImage: `linear-gradient(180deg, rgba(18,18,18,0.02), rgba(18,18,18,0.16)), url("${sitePath(item.visual)}")` }}
             />
             <div className="min-w-0 flex-1">
               <p className="m-0 text-label leading-[1.35] tracking-[0.08em] text-red-400">{item.tagline}</p>

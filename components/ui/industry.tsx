@@ -1,4 +1,5 @@
 import type { ComponentType, ReactNode } from "react";
+import { sitePath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 
 export interface Industry {
@@ -20,7 +21,7 @@ export function IndustryTile({ industry, className }: { industry: Industry; clas
   const Icon = industry.icon;
   return (
     <a
-      href={industry.href}
+      href={sitePath(industry.href)}
       className={cn(
         "relative isolate flex min-h-[220px] flex-col justify-end overflow-hidden rounded-card p-[22px] text-on-dark",
         "bg-cover bg-center transition-[transform,box-shadow] duration-[220ms] ease-out",
@@ -29,7 +30,7 @@ export function IndustryTile({ industry, className }: { industry: Industry; clas
         "before:bg-[linear-gradient(180deg,rgba(18,18,18,0.08),rgba(18,18,18,0.7))]",
         className,
       )}
-      style={{ backgroundImage: `url(${industry.image})` }}
+      style={{ backgroundImage: `url("${sitePath(industry.image)}")` }}
     >
       <span className="flex items-center gap-2.5 text-[1.25rem] leading-[1.12] font-semibold text-on-dark">
         {Icon ? <Icon className="size-[22px]" /> : null}
@@ -60,7 +61,7 @@ export function IndustryRow({ industry, className }: { industry: Industry; class
   const Icon = industry.icon;
   return (
     <a
-      href={industry.href}
+      href={sitePath(industry.href)}
       className={cn(
         "grid items-center gap-[clamp(20px,4vw,56px)] border-b border-[rgba(18,18,18,0.14)] px-1 py-[clamp(24px,3.2vw,36px)] text-ink",
         "tablet:grid-cols-[minmax(220px,0.9fr)_minmax(0,1.5fr)_auto]",
@@ -101,7 +102,7 @@ export function IndustryRowList({ className, children }: { className?: string; c
 export function IndustryPanel({ industry, className }: { industry: Industry; className?: string }) {
   return (
     <a
-      href={industry.href}
+      href={sitePath(industry.href)}
       className={cn(
         "group relative flex min-w-0 flex-1 flex-col justify-end overflow-hidden rounded-card text-on-dark",
         "transition-[flex-grow,box-shadow] duration-[520ms] ease-exit",
@@ -112,7 +113,7 @@ export function IndustryPanel({ industry, className }: { industry: Industry; cla
       <span
         aria-hidden
         className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-[600ms] ease-exit group-hover:scale-[1.07]"
-        style={{ backgroundImage: `url(${industry.image})` }}
+        style={{ backgroundImage: `url("${sitePath(industry.image)}")` }}
       />
       <span
         aria-hidden

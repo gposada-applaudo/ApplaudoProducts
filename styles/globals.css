@@ -14,31 +14,6 @@
    would look empty. The rule at the end of this file covers that case. */
 @import "./tokens.css";
 
-/* ── Avenir Next ──────────────────────────────────────────────────────────
-   The brand typeface, shipped with the site. Without these, only Mac and
-   iPhone visitors saw Avenir (macOS bundles it); everyone else fell through
-   to Arial. Converted from the licensed .ttf originals to .woff2 — same
-   outlines, 83% smaller. Originals kept in reference/fonts-original/.
-
-   Only 400 and 600 are here because that is all the design uses (the Single
-   Family Rule, reference/legacy/DESIGN.md §11). `swap` shows the fallback
-   immediately and switches when the font arrives, so text is never invisible. */
-@font-face {
-  font-family: "Avenir Next";
-  src: url("/assets/fonts/AvenirNext-400.woff2") format("woff2");
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Avenir Next";
-  src: url("/assets/fonts/AvenirNext-600.woff2") format("woff2");
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* shadcn/ui animation variants (data-state, data-side, …) */
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -135,7 +110,7 @@
     background-image:
       radial-gradient(78px 46px at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.025) 28%, transparent 54%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(154, 154, 154, 0.04) 34%, rgba(42, 42, 42, 0.05) 72%, rgba(255, 255, 255, 0.05)),
-      url("/assets/effects/button-glass-dark.png");
+      var(--button-glass-dark);
     filter: grayscale(0.08) saturate(1.02) contrast(1.08) brightness(1.01);
   }
 
@@ -152,7 +127,7 @@
     background-image:
       radial-gradient(78px 46px at var(--shine-x, 50%) var(--shine-y, 50%), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.03) 28%, transparent 54%),
       linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(214, 214, 214, 0.08) 34%, rgba(184, 184, 184, 0.06) 72%, rgba(255, 255, 255, 0.1)),
-      url("/assets/effects/button-glass-light.png");
+      var(--button-glass-light);
     filter: grayscale(0) saturate(1.04) contrast(1.04) brightness(1.03);
   }
 

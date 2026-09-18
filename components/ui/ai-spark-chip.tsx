@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { sitePath } from "@/lib/paths";
 
 /**
  * `.ai-spark-chip` (styles.css) — a 40px frosted square holding the AI spark
@@ -20,7 +21,7 @@ export function AiSparkChip({ className }: { className?: string }) {
         className,
       )}
     >
-      <img src="/assets/ui/ai-spark.svg" alt="" className="size-[18px] object-contain" />
+      <img src={sitePath("/assets/ui/ai-spark.svg")} alt="" className="size-[18px] object-contain" />
     </span>
   );
 }

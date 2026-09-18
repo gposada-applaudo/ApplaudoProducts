@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Eyebrow } from "@/components/ui/eyebrow";
 
@@ -12,16 +12,19 @@ export function Section({
   id,
   tone = "base",
   className,
+  style,
   children,
 }: {
   id?: string;
   tone?: "base" | "lift";
   className?: string;
+  style?: CSSProperties;
   children: ReactNode;
 }) {
   return (
     <section
       id={id}
+      style={style}
       className={cn(
         "relative overflow-clip px-6 py-[clamp(72px,8vw,108px)]",
         tone === "lift" ? "bg-surface-lift" : "bg-surface",

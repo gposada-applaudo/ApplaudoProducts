@@ -4,12 +4,15 @@ const nextConfig: NextConfig = {
   // Build to plain HTML files in out/ — upload that folder to any server.
   output: "export",
 
-  // NO assetPrefix. "./" was tried so out/index.html could be double-clicked;
-  // it works at the root but breaks every deeper route, because on
-  // /kitchensink/ a relative "./_next/…" resolves to "/kitchensink/_next/…",
-  // which does not exist — that page then loads with no CSS and no JS. Absolute
-  // "/_next/…" is correct for anything served from a domain root, which is
-  // every real deployment and also `npm run preview`.
+  // GitHub project pages are served from /<repository>. The Pages workflow
+  // supplies this value; local development leaves it empty and stays at `/`.
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH,
+
+  // NO assetPrefix. `basePath` is the supported way to host the whole app at a
+  // sub-path; assetPrefix only moves Next's own static files and would leave
+  // public assets behind. Relative "./_next/…" paths also break deeper routes
+  // such as /kitchensink/. Local preview stays at the domain root because the
+  // Pages-only environment variable is absent there.
   trailingSlash: true,
   images: { unoptimized: true },
 };

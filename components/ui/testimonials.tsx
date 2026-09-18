@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { RiArrowLeftLine, RiArrowRightLine, RiDoubleQuotesL, RiUser3Line } from "@remixicon/react";
+import { sitePath } from "@/lib/paths";
 import { cn } from "@/lib/utils";
 
 export interface Testimonial {
@@ -58,7 +59,7 @@ export function Testimonials({ items, className }: { items: Testimonial[]; class
               <figcaption className="mt-auto flex items-center gap-3.5">
                 <span className="grid size-11 shrink-0 place-items-center overflow-hidden rounded-pill bg-ink/[0.06] text-ink-muted">
                   {t.avatar ? (
-                    <img src={t.avatar} alt="" className="size-full object-cover" />
+                    <img src={sitePath(t.avatar)} alt="" className="size-full object-cover" />
                   ) : (
                     <RiUser3Line className="size-5" />
                   )}

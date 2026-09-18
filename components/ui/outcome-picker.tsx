@@ -3,6 +3,7 @@
 import { useId, useState, type ComponentType } from "react";
 import { cn } from "@/lib/utils";
 import { GlassCard } from "@/components/ui/glass-card";
+import { sitePath } from "@/lib/paths";
 
 export interface OutcomeChoice {
   id: string;
@@ -58,7 +59,7 @@ export function OutcomePicker({ choices, className }: { choices: OutcomeChoice[]
               "[mask-image:linear-gradient(to_right,transparent,black_70%)]",
               i === active ? "opacity-100" : "opacity-0",
             )}
-            style={{ backgroundImage: `url(${c.image})` }}
+            style={{ backgroundImage: `url("${sitePath(c.image)}")` }}
           />
         ))}
       </div>

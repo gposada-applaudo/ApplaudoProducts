@@ -1,4 +1,5 @@
 import { Eyebrow } from "@/components/ui/eyebrow";
+import { sitePath } from "@/lib/paths";
 /**
  * Ported from the kitchensink's `.recognition-layout` (reference/legacy/styles.css:3524-3636):
  * an award feature (image + caption) beside two rows of partner badges. Also used, with
@@ -15,7 +16,7 @@ function BadgeGrid({ badges, ariaLabel }: { badges: PartnerBadge[]; ariaLabel: s
     <div className="grid grid-cols-1 gap-[34px] mobile:grid-cols-2 tablet:grid-cols-4" aria-label={ariaLabel}>
       {badges.map((badge) => (
         <div key={badge.label} className="flex min-h-[132px] items-center justify-center">
-          <img src={badge.src} alt={badge.label} className="block max-h-[108px] w-[min(100%,207px)] object-contain" />
+          <img src={sitePath(badge.src)} alt={badge.label} className="block max-h-[108px] w-[min(100%,207px)] object-contain" />
         </div>
       ))}
     </div>
@@ -47,7 +48,7 @@ export function Recognition({
       <div className="grid grid-cols-1 items-center gap-10 tablet:grid-cols-[minmax(300px,0.82fr)_minmax(0,1.18fr)] tablet:gap-20">
         <figure className="m-0">
           <img
-            src={award.src}
+            src={sitePath(award.src)}
             alt={award.title}
             className="mx-auto mb-[18px] block w-[min(100%,238px)] drop-shadow-[0_22px_42px_rgba(18,18,18,0.16)]"
           />
@@ -69,7 +70,7 @@ export function Recognition({
               {certBadges.map((badge) => (
                 <div key={badge.label} className="flex min-h-[132px] items-center justify-center">
                   <img
-                    src={badge.src}
+                    src={sitePath(badge.src)}
                     alt={badge.label}
                     className="block max-h-[108px] w-[min(100%,207px)] object-contain"
                   />

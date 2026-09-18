@@ -40,6 +40,7 @@ import {
   FOOTER_BADGES,
 } from "@/content/landing";
 import type { Tokens, ResolvedToken } from "@/lib/read-tokens";
+import { sitePath } from "@/lib/paths";
 
 /* ── Gallery chrome ───────────────────────────────────────────────────── */
 
@@ -387,7 +388,10 @@ export function Kitchensink({ tokens }: { tokens: Tokens }) {
         </Block>
 
         <Block id="spark" title="AI spark chip" source="components/ui/ai-spark-chip.tsx">
-          <div className="rounded-card bg-[url(/assets/effects/glass-1.jpeg)] bg-cover bg-center p-8">
+          <div
+            className="rounded-card bg-cover bg-center p-8"
+            style={{ backgroundImage: `url("${sitePath("/assets/effects/glass-1.jpeg")}")` }}
+          >
             <AiSparkChip />
           </div>
           <p className="mt-5 max-w-[70ch] text-body-sm leading-relaxed text-ink-muted">
@@ -475,7 +479,10 @@ export function Kitchensink({ tokens }: { tokens: Tokens }) {
             <code className="font-mono">::before</code>. Use GlassCard when the surface should read as glass
             immediately; use Pillar when glass is the reward for engaging.
           </p>
-          <div className="grid gap-5 rounded-card bg-[url(/assets/effects/glass-1.jpeg)] bg-cover bg-center p-8 tablet:grid-cols-2">
+          <div
+            className="grid gap-5 rounded-card bg-cover bg-center p-8 tablet:grid-cols-2"
+            style={{ backgroundImage: `url("${sitePath("/assets/effects/glass-1.jpeg")}")` }}
+          >
             <GlassCard className="p-7">
               <h3 className="mb-2 text-title-sm font-semibold">Static</h3>
               <p className="text-body-sm leading-relaxed text-ink-muted">
